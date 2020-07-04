@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <style>
+body {
+  font-size: 6rem;
+}
+.words {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.words>* {
+  margin: 1.5rem;
+}
+    </style>
+    <script src="words.js"></script>
+    <script src="fonts.js"></script>
+    <script>
+      let $el = (tag, props) => {
+        let el = document.createElement(tag);
+        for (let [k, v] of Object.entries(props)) {
+          el[k] = v;
+        }
+        return el;
+      };
+      let $ = (q) => document.querySelector(q);
+      function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+          j = Math.floor(Math.random() * (i + 1));
+          x = a[i];
+          a[i] = a[j];
+          a[j] = x;
+        }
+        return a;
+      }
+      (function() {
+        let len = window.fonts.length;
+        let font = window.fonts[Math.floor(len * Math.random())];
+        let head = document.querySelector('head');
+        head.appendChild($el('link', {
+          href: 'https://fonts.googleapis.com/css2?family=' + escape(font) + '&display=swap',
+          rel: 'stylesheet'
+        }));
+        head.appendChild($el('style', {
+          innerHTML: 'body{font-family:"' + font + '";}'
+        }));
+      })();
+
+      addEventListener('load', (e) => {
+        let el = $('.words');
+        let words = window.words.slice(
+          0, parseInt(location.search.substring(1) || 8, 10));
+        shuffle(words);
+        for (let word of words) {
+          el.appendChild($el('div', {
+            className: 'word',
+            innerText: word,
+          }));
+        }
+      });
+    </script>
+  </head>
+  <body><div class="words"></div></body>
+</html>
