@@ -11,10 +11,11 @@ let rint = (max) => Math.floor(max * Math.random());
 let numDigits = (n) => Math.log10(n) + 1 | 0;
 let makeSum = (min, max) => {
   let range = max - min;
-  let sum = min + 1 + rint(range - 1);
-  let first = rint(sum);
+  let [num1, num2] = [min + rint(range), min + rint(range)];
+  let [sum, first] = num1 > num2 ? [num1, num2] : [num2, num1];
+
   let second = sum - first;
-  return [first, second, sum];
+  return [sum, first, second];
 };
 var qs = {
   getI: (k) => {
@@ -32,7 +33,7 @@ addEventListener('DOMContentLoaded', () => {
   let container = $('.math');
   let numProbs = qs.getI('n') || 8;
   let min = qs.getI('min') || 0;
-  let max = qs.getI('max') || 10;
+  let max = qs.getI('max') || 11;
   let style = $el('style');
   $('head').appendChild(style);
   style.sheet.insertRule(`label>input{width:${2 * numDigits(max)}rem}`);
@@ -64,16 +65,17 @@ addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  let mix = qs.getF('mix') || .5;
+  let mix = qs.getF('mix');
+  mix = isNaN(mix) ? .5 : mix;
   for (let i = 0; i < numProbs; i++) {
     let sum = makeSum(min, max);
     let equation;
     if (Math.random() < mix) {
-      equation = $el('label', {innerHTML: `${sum[0]} + ${sum[1]} =`});
-      equation.appendChild($el('input', {solution: sum[2], type:'text'}));
-    } else {
-      equation = $el('label', {innerHTML: `${sum[2]} &#x2212; ${sum[1]} =`});
+      equation = $el('label', {innerHTML: `${sum[1]} + ${sum[2]} =`});
       equation.appendChild($el('input', {solution: sum[0], type:'text'}));
+    } else {
+      equation = $el('label', {innerHTML: `${sum[0]} &#x2212; ${sum[1]} =`});
+      equation.appendChild($el('input', {solution: sum[2], type:'text'}));
     }
     // Icons for right and wrong
     equation.appendChild($el('i', {className: 'cil-check right'}));
