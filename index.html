@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="mercury.css" type="text/css">
-    <title>Document</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="mercury.css" type="text/css">
+<style>
+input[type=number] {
+  width: 5rem;
+  display: inline;
+  font-weight: bold;
+  margin:0;
+}
+label {
+  display: inline;
+}
+</style>
+  <title>Document</title>
 </head>
 <body>
   <ul><h2>Homeschooling "worksheets"</h2>
     <li>
-      <a href="math.html">Addition &amp; Subtraction drills</a>
-      <br/>
-      <i>Auto-generated addition and subtraction problems, with configurable limits.</i>
+      <form action="math.html" method="GET">
+        <button>Addition &amp; Subtraction drills</button>
+        <br/>
+        <i>Auto-generated addition and subtraction problems, with configurable limits.</i>
+        <br/>
+        <label>Generate <input type=number min=1 name=n value=10 /></label> problems, with a
+        <label>minimum sum of <input type=number name=min value=0 /></label> and a
+        <label>maximum sum of <input type=number name=max value=10 /></label>, and 
+        <label><input type=number name=setSize value=2 /> numbers per problem</label>.
+        There should be
+        <label><input type=number min=0 name=sum_parts value=1 /> addition problem</label> for every
+        <label><input type=number min=0 name=difference_parts value=1 /> subtraction problem</label>.
+      </form>
     </li>
     <li>
       <a href="words.html">Word reading drills</a>
@@ -19,5 +41,66 @@
         recognizing useful words by sight.</i>
     </li>
   </ul>
+
+  <ul><h2>Simulation</h2>
+  </ul>
+
+  <ul>Errata
+    <li>This is what we teach our kids</li>
+    <ul>
+      <li>Reading: <a href="https://archive.org/details/teachyourchildto0000enge">Teach Your Child
+          to Read in 100 Easy Lessons</a></li>
+      <ul>Good childrens' books
+        <li><i>Fraidy Zoo</i> and <i>How do you Dance?</i></li>
+        <li><i>Leslie Patricelli</i></li>
+      </ul>
+
+      <li><ul>Math
+          <li>Counting by 2's</li>
+      </ul></li>
+
+      <li><ul>Engineering
+          <li><a href="https://www.youtube.com/channel/UCWBkudOTaVbvkCBc0pyZFMA">How it's made</a></li>
+          <li><a href="https://www.youtube.com/user/destinws2">Smarter Every Day</a></li>
+      </ul></li>
+
+      <li>Geography: <a href="https://maps.google.com">Google Maps / Earth</a></li>
+
+      <li><ul>PE:
+          <li>Riding a bike - balance bike, training wheels, take off training wheels</li>
+          <li>Swimming - puddle jumpers</li>
+          <li>Tennis</li>
+      </ul></li>
+
+      <li><ul>Music
+      </ul></li>
+
+      <li><ul>Art: <a href="https://www.youtube.com/user/ArtforKidsHub">ArtForKidsHub</a>
+      </ul></li>
+
+      <li><ul>
+        <li><b>2020-07-19:</b> Count by 2's, Soccer</li>
+      </ul></li>
+    </ul>
+  </ul>
+
+  <ul><h2>TODO</h2>
+    <li><i>TODO</i> fractions, ratios</li>
+    <li><i>TODO</i> angles - radians, ratios, fractions</li>
+    <li><i>TODO</i> shapes / geometry</li>
+
+    <li><i>TODO</i> how suction works (ie equalized pressure makes no movement, unbalanced pressure
+      creates suction)</li>
+    <li><i>TODO</i> why hot air rises (density)</li>
+    <li><i>TODO</i> water level dropping due to evaporation at room temperature</li>
+    <li><i>TODO</i> phase changes - ie starting with ice and slowly increasing temperature until you
+      get water, then keep increasing temperature until you get steam</li>
+    <li><i>TODO</i> temperature conduction - how heat and cold are transferred eg when you touch
+      something hot or cold.</li>
+    <li><i>TODO</i> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations">movable clock</a> to show how minute hand is related to hour hand is related to
+      second hand. button to reveal time in digital format. maybe a number line to show minutes in
+      an hour - why halfway around is 30 / 60</li>
+  </ul>
+
 </body>
 </html>

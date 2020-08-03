@@ -1,6 +1,26 @@
-body, input {
+body {
   font-size: 3rem;
 }
+
+form.controls {
+  position: absolute;
+  top:0;right:0;
+  border: 1px solid rgba(0,0,0,.5);
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+form.controls label {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+form.controls input {
+  font-size: 1rem;
+  margin-left: .5rem;
+}
+
 form.problem {
   display: flex;
   flex-direction: row;
@@ -12,6 +32,9 @@ form.problem label {
   outline: 1px auto;
   padding: .9rem 1rem;
   position: relative;
+}
+form.problem input {
+  font-size: inherit;
 }
 form>input[type=submit] {
   display: none;
@@ -63,4 +86,9 @@ label.wrong input {
 }
 label.right input {
   border-color: green;
+}
+
+button.regenerate {
+  float: right;
+  padding: .5rem 1rem;
 }
