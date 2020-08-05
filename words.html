@@ -16,15 +16,8 @@ body {
     </style>
     <script src="words.js"></script>
     <script src="fonts.js"></script>
+    <script src="lib.js"></script>
     <script>
-      let $el = (tag, props) => {
-        let el = document.createElement(tag);
-        for (let [k, v] of Object.entries(props)) {
-          el[k] = v;
-        }
-        return el;
-      };
-      let $ = (q) => document.querySelector(q);
       function shuffle(a) {
         var j, x, i;
         for (i = a.length - 1; i > 0; i--) {
@@ -50,8 +43,7 @@ body {
 
       addEventListener('load', (e) => {
         let el = $('.words');
-        let words = window.words.slice(
-          0, parseInt(location.search.substring(1) || 8, 10));
+        let words = window.words.slice(0, qs.getI('n', 10));
         shuffle(words);
         for (let word of words) {
           el.appendChild($el('div', {

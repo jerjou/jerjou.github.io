@@ -1,87 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Homeschooling toolbox</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="mercury.css" type="text/css">
 <style>
+body {
+  line-height: 1.5em;
+}
+li {
+  margin: 0;
+}
+ul ul {
+  padding-top: 0;
+}
+h2, h3 {
+  border-bottom: 1px solid rgba(0,0,0,.5);
+}
 input[type=number] {
   width: 5rem;
   display: inline;
   font-weight: bold;
   margin:0;
+  padding: .1rem .5rem;
 }
 label {
   display: inline;
 }
 </style>
-  <title>Document</title>
+  <script>
+    // Use scroll wheel to change numbers
+    window.addEventListener('wheel', e => {
+      let el = e.target;
+      if (!el.matches('input[type=number]')) return;
+      if (el.step === 'any') return;
+      let numIters = ~~Math.abs(Math.round(e.deltaY));
+      if (e.deltaY < 0) {
+        for (let i = 0; i< numIters; i++) el.stepUp();
+      } else {
+        for (let i = 0; i< numIters; i++) el.stepDown();
+      }
+      e.preventDefault();
+    });
+    window.addEventListener('click', e => {
+      if (e.target.tagName !== 'A') return;
+      let form = e.target.closest('form');
+      if (form) {
+        e.preventDefault();
+        form.action = e.target.href;
+        form.submit();
+      }
+    });
+  </script>
 </head>
 <body>
-  <ul><h2>Homeschooling "worksheets"</h2>
+  <ul><h2>My homeschooling toolbox</h2>
     <li>
-      <form action="math.html" method="GET">
-        <button>Addition &amp; Subtraction drills</button>
+      <form>
+        <a href="math.html">Addition &amp; Subtraction drills</a>
         <br/>
         <i>Auto-generated addition and subtraction problems, with configurable limits.</i>
         <br/>
         <label>Generate <input type=number min=1 name=n value=10 /></label> problems, with a
         <label>minimum sum of <input type=number name=min value=0 /></label> and a
         <label>maximum sum of <input type=number name=max value=10 /></label>, and 
-        <label><input type=number name=setSize value=2 /> numbers per problem</label>.
+        <label><input type=number name=setSize min=2 value=2 /> numbers per problem</label>.
         There should be
         <label><input type=number min=0 name=sum_parts value=1 /> addition problem</label> for every
         <label><input type=number min=0 name=difference_parts value=1 /> subtraction problem</label>.
       </form>
     </li>
     <li>
-      <a href="words.html">Word reading drills</a>
+      <form>
+        <a href="words.html">Word reading drills</a>
+        <br/>
+        <i>Practice recognizing <label>the <input type=number min=1 name=n value=10 /> most commonly-used
+            english words</label> (according to wikipedia), presented in a random font.</i>
+        <br/>
+        Refresh the page to change the order and font of the words.
+      </form>
+    </li>
+    <li>
+      <a href="gassim/">Gas Simulation</a>
       <br/>
-      <i>Top english words (according to wikipedia) are presented in a random font, to practice
-        recognizing useful words by sight.</i>
+      <i>A simulation of how gas works.</i>
+      <br/>
+      I found myself explaining how heat works in liquids / gasses a couple times, and felt the lack
+      of a visual aid, so I made one.
     </li>
   </ul>
 
-  <ul><h2>Simulation</h2>
+  <ul><h3>Online resources</h3><i>Online resources that we use</i>
+    <li>Reading
+      <ul>
+        <li><a href="https://archive.org/details/teachyourchildto0000enge">Teach Your Child
+          to Read in 100 Easy Lessons</a></li>
+        <li>Good childrens' books
+        <ul>
+          <li><a href="https://www.worldcat.org/search?q=au%3AHeder%2C+Thyra.&qt=hot_author">Thyra Header</a>'s <a href="https://www.worldcat.org/title/fraidyzoo/oclc/935244911/editions?editionsView=true&referer=br">Fraidy Zoo</a> and
+            <a href="https://www.worldcat.org/title/how-do-you-dance/oclc/1126336756&referer=brief_results">How do you Dance?</a>
+          </li>
+          <li><a href="https://www.worldcat.org/title/alpha-oops-the-day-z-went-first/oclc/798831660&referer=brief_results">Alpha Oops! The day Z went first</a>,
+            and
+            <a href="https://www.worldcat.org/title/alpha-oops-h-is-for-halloween/oclc/815743140&referer=brief_results">Alpha Oops! H is for Halloween</a></li>
+          <li><a href="https://www.worldcat.org/search?q=au%3APatricelli%2C+Leslie%2C&qt=hot_author">Leslie Patricelli</a>; e.g. <a href="https://www.worldcat.org/title/binky/oclc/58840440&referer=brief_results">Binky</a></li>
+          <li><a href="https://www.worldcat.org/search?q=au%3AO%27Connor%2C+Jane%2C&qt=hot_author">Jane O'Connor's <i>Fancy Nancy</i> books</a>, including
+            <a href="https://www.worldcat.org/title/jojo-and-daddy-bake-a-cake/oclc/1004426218&referer=brief_results">JoJo and Daddy bake a cake</a></li>
+        </ul>
+      </ul>
+    </li>
+
+    <li>Art: <a href="https://www.youtube.com/user/ArtforKidsHub">ArtForKidsHub</a>
+    </li>
+
+    <li>Engineering<ul>
+        <li><a href="https://www.youtube.com/channel/UCWBkudOTaVbvkCBc0pyZFMA">How it's made</a></li>
+        <li><a href="https://www.youtube.com/user/destinws2">Smarter Every Day</a></li>
+    </ul></li>
+
+    <li>Geography: <a href="https://maps.google.com">Google Maps / Earth</a></li>
+
+    <li>PE:<ul>
+        <li>Parkour<ul>
+            <li>We watch <a href="https://www.youtube.com/watch?v=aJiOScpdaM8">this parkour video</a> for inspiration.</li>
+            <li><b>Engineering</b>: We build <a href="https://www.youtube.com/watch?v=al7aMZpU5aQ">balance bars</a>, jump targets, and a <a href="https://parkourvisions.org/sturdymade">vault box</a> from <a href="https://dpqe0zkrjo0ak.cloudfront.net/pfil/9018/pkv_vault_box_blueprints_Large.jpg">these plans</a> (recent video <a href="https://www.youtube.com/watch?v=7dWTwmE5MdI">here</a>)</li>
+        </ul></li>
+    </ul></li>
+
+    <li>Music
+      <ul>
+        <li>We watch and dance to Sara Bareilles's <a href="https://www.youtube.com/watch?v=QUQsqBqxoR4">Brave</a>
+      </ul>
+    </li>
   </ul>
 
-  <ul>Errata
-    <li>This is what we teach our kids</li>
-    <ul>
-      <li>Reading: <a href="https://archive.org/details/teachyourchildto0000enge">Teach Your Child
-          to Read in 100 Easy Lessons</a></li>
-      <ul>Good childrens' books
-        <li><i>Fraidy Zoo</i> and <i>How do you Dance?</i></li>
-        <li><i>Leslie Patricelli</i></li>
-      </ul>
-
-      <li><ul>Math
-          <li>Counting by 2's</li>
-      </ul></li>
-
-      <li><ul>Engineering
-          <li><a href="https://www.youtube.com/channel/UCWBkudOTaVbvkCBc0pyZFMA">How it's made</a></li>
-          <li><a href="https://www.youtube.com/user/destinws2">Smarter Every Day</a></li>
-      </ul></li>
-
-      <li>Geography: <a href="https://maps.google.com">Google Maps / Earth</a></li>
-
-      <li><ul>PE:
-          <li>Riding a bike - balance bike, training wheels, take off training wheels</li>
-          <li>Swimming - puddle jumpers</li>
-          <li>Tennis</li>
-      </ul></li>
-
-      <li><ul>Music
-      </ul></li>
-
-      <li><ul>Art: <a href="https://www.youtube.com/user/ArtforKidsHub">ArtForKidsHub</a>
-      </ul></li>
-
-      <li><ul>
-        <li><b>2020-07-19:</b> Count by 2's, Soccer</li>
-      </ul></li>
-    </ul>
+  <!--
+  <ul><h2>Errata</h2><i>Other stuff we do</i>
+    <li>Riding a bike - balance bike, training wheels, take off training wheels</li>
+    <li>Swimming - puddle jumpers</li>
+    <li>Tennis</li>
   </ul>
 
   <ul><h2>TODO</h2>
@@ -101,6 +159,7 @@ label {
       second hand. button to reveal time in digital format. maybe a number line to show minutes in
       an hour - why halfway around is 30 / 60</li>
   </ul>
+  -->
 
 </body>
 </html>
