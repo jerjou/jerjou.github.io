@@ -55,16 +55,17 @@ function checkAnswers(e) {
 
 function generateProblems(numProbs, min, max, mix) {
   let form = $el('form', {className: 'problem'});
+  let maxlength = numDigits(max);
 
   for (let i = 0; i < numProbs; i++) {
     let sum = makeSum(min, max, qs.getI('setSize', 2));
     let equation;
     if (Math.random() < mix) {
       equation = $el('label', {innerHTML: `${sum.slice(1).join(' + ')} =`});
-      equation.appendChild($el('input', {solution: sum[0], type:'text'}));
+      equation.appendChild($el('input', {solution: sum[0], type:'text', maxlength: maxlength}));
     } else {
       equation = $el('label', {innerHTML: `${sum.slice(0, -1).join(' &#x2212; ')} =`});
-      equation.appendChild($el('input', {solution: sum[sum.length-1], type:'text'}));
+      equation.appendChild($el('input', {solution: sum[sum.length-1], type:'text', maxlength: maxlength}));
     }
     // Icons for right and wrong
     equation.appendChild($el('i', {className: 'cil-check right'}));
@@ -72,6 +73,7 @@ function generateProblems(numProbs, min, max, mix) {
 
     form.appendChild(equation);
   }
+  // TODO: use a delegated event handler
   [...form.querySelectorAll('input[type=text]')].forEach(input => {
     input.addEventListener('blur', checkAnswers);
     input.addEventListener('focus', () => input.closest('label').classList.add('active'));

@@ -1,0 +1,30 @@
+<style>
+body {
+  display:grid;
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+}
+.num {
+  font-size: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid rgba(0,0,0,.5);
+  text-align: center;
+  cursor: default;
+}
+.num:hover {
+  color: green;
+  border-color: green;
+}
+</style>
+<body>
+</body>
+<script>
+  let $el = (t, props) => {
+    let el = document.createElement(t);
+    Object.assign(el, props);
+    return el;
+  };
+  document.body.append(
+    ...[...Array(100).keys()]
+    .map(n => $el('div', {className: 'num', innerText: n})));
+</script>

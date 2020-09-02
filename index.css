@@ -1,0 +1,22 @@
+body {
+  line-height: 1.5em;
+}
+li {
+  margin: 0;
+}
+ul ul {
+  padding-top: 0;
+}
+h2, h3 {
+  border-bottom: 1px solid rgba(0,0,0,.5);
+}
+input[type=number] {
+  width: 5rem;
+  display: inline;
+  font-weight: bold;
+  margin:0;
+  padding: .1rem .5rem;
+}
+label {
+  display: inline;
+}
