@@ -18,6 +18,19 @@ let makeSum = (min, max, n=2) => {
   return [sum, ...nums];
 };
 
+function timer(e) {
+  let form = $('form');
+  if (!form.startTime) {
+    form.startTime = Date.now();
+  } else {
+    let problems = [...$('form').querySelectorAll('label')];
+    if (problems.every(l => l.classList.contains('right'))) {
+      $('div.time').innerHTML = `
+        Time elapsed: ${Math.round((Date.now() - form.startTime) / 1000)}s`;
+    }
+  }
+}
+
 function checkInput(input) {
   let label = input.closest('label');
   if (!input.value.length) {
@@ -111,5 +124,8 @@ addEventListener('DOMContentLoaded', _ => {
   });
   container.appendChild(regenerate);
 
+  container.appendChild($el('div', {className:'time'}));
+  form.addEventListener('focusout', timer);
+  form.addEventListener('submit', timer);
 });
 
