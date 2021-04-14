@@ -18,6 +18,11 @@ let makeSum = (min, max, n=2) => {
   return [sum, ...nums];
 };
 
+function resetTimer() {
+  let form = $('form');
+  delete form.startTime;
+  $('div.time').innerHTML = '';
+}
 function timer(e) {
   let form = $('form');
   if (!form.startTime) {
@@ -121,6 +126,7 @@ addEventListener('DOMContentLoaded', _ => {
     e.preventDefault();
     let form = generateProblems(numProbs, min, max, mix);
     container.replaceChild(form, container.childNodes[0]);
+    resetTimer();
   });
   container.appendChild(regenerate);
 
