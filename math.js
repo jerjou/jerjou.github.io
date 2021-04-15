@@ -11,7 +11,6 @@ let makeSum = (min, max, n=2) => {
   let range = max - min;
   let divisions = [...Array(n).keys()].map(_ => min + rint(range));
   divisions.sort((a, b) => a - b);
-  console.log(divisions);
   let nums = [
     divisions[0], ...divisions.slideBy(2).map(([a, b]) => b - a)];
   let sum = divisions.pop();
@@ -19,9 +18,8 @@ let makeSum = (min, max, n=2) => {
 };
 
 function resetTimer() {
-  let form = $('form');
-  delete form.startTime;
-  $('div.time').innerHTML = '';
+  var display = $('div.time');
+  if (display) display.innerHTML = '';
 }
 function timer(e) {
   let form = $('form');
@@ -103,6 +101,11 @@ function generateProblems(numProbs, min, max, mix) {
 
   setTimeout(_ => form.querySelector('input').focus(), 10);
 
+  // hook in the timing functionality
+  form.addEventListener('focusout', timer);
+  form.addEventListener('submit', timer);
+  resetTimer();
+
   return form;
 }
 addEventListener('DOMContentLoaded', _ => {
@@ -118,20 +121,17 @@ addEventListener('DOMContentLoaded', _ => {
   $('head').appendChild(style);
   style.sheet.insertRule(`label>input{width:${2 * numDigits(max)}rem}`);
 
-  let form = generateProblems(numProbs, min, max, mix);
-  container.appendChild(form);
+  container.appendChild(generateProblems(numProbs, min, max, mix));
 
   let regenerate = $el('button', {className: 'regenerate', innerText: 'Regenerate'});
   regenerate.addEventListener('click', e => {
     e.preventDefault();
-    let form = generateProblems(numProbs, min, max, mix);
-    container.replaceChild(form, container.childNodes[0]);
-    resetTimer();
+    container.replaceChild(
+      generateProblems(numProbs, min, max, mix),
+      container.childNodes[0]);
   });
   container.appendChild(regenerate);
 
   container.appendChild($el('div', {className:'time'}));
-  form.addEventListener('focusout', timer);
-  form.addEventListener('submit', timer);
 });
 
