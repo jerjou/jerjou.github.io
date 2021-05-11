@@ -2,8 +2,8 @@ Array.prototype.slideBy = function(windo) {
   let end = 1 + this.length - windo;
   return [...Array(end).keys()].map(i => this.slice(i, i + windo));
 };
-let rint = (max) => Math.floor(max * Math.random());
-let numDigits = (n) => Math.log10(n) + 1 | 0;
+let rint = max => Math.floor(max * Math.random());
+let numDigits = n => Math.log10(n) + 1 | 0;
 
 // Generates a set of random numbers that sum to the first element of the
 // returned array
@@ -132,6 +132,7 @@ addEventListener('DOMContentLoaded', _ => {
   });
   container.appendChild(regenerate);
 
+  container.appendChild($el('input', {type:'checkbox'}));
   container.appendChild($el('div', {className:'time'}));
 });
 

@@ -92,3 +92,7 @@ button.regenerate {
   float: right;
   padding: .5rem 1rem;
 }
+
+input:checked + div.time {
+  display: none;
+}
