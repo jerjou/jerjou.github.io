@@ -93,6 +93,6 @@ button.regenerate {
   padding: .5rem 1rem;
 }
 
-input:checked + div.time {
+input:not(:checked) + div.time {
   display: none;
 }
