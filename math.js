@@ -10,11 +10,22 @@ let numDigits = n => Math.log10(n) + 1 | 0;
 let makeSum = (min, max, n=2) => {
   let range = max - min;
   let divisions = [...Array(n).keys()].map(_ => min + rint(range));
+  // The `divisions` array holds all the numbers you'll hit along the way to
+  // your sum, including the sum.
   divisions.sort((a, b) => a - b);
+  // Create an array of the numbers you're going to be summing
   let nums = [
     divisions[0], ...divisions.slideBy(2).map(([a, b]) => b - a)];
+  // The last number of `divisions` is the sum
   let sum = divisions.pop();
   return [sum, ...nums];
+};
+
+// min and max affect the numbers, not the final product.
+let makeProduct = (min, max, n=2) => {
+  let range = max - min;
+  let nums = [...Array(n).keys()].map(_ => min + rint(range));
+  return [nums.reduce((prev, x) => prev * x), ...nums];
 };
 
 function resetTimer() {
@@ -69,20 +80,35 @@ function checkAnswers(e) {
   }
 }
 
-function generateProblems(numProbs, min, max, mix) {
+function generateProblems(numProbs, min, max, [sum_range, sub_range, mult_range, div_range]) {
   let form = $el('form', {className: 'problem'});
   let maxlength = numDigits(max);
 
   for (let i = 0; i < numProbs; i++) {
-    let sum = makeSum(min, max, qs.getI('setSize', 2));
+    let problem_type = Math.random();
     let equation;
-    if (Math.random() < mix) {
-      equation = $el('label', {innerHTML: `${sum.slice(1).join(' + ')} =`});
-      equation.appendChild($el('input', {solution: sum[0], type:'text', maxlength: maxlength}));
+    if (problem_type < sub_range[1]) {
+      // Addition or subtraction
+      let sum = makeSum(min, max, qs.getI('setSize', 2));
+      if (problem_type < sum_range[1]) {
+        equation = $el('label', {innerHTML: `${sum.slice(1).join(' + ')} =`});
+        equation.appendChild($el('input', {solution: sum[0], type:'text', maxlength: maxlength}));
+      } else {
+        equation = $el('label', {innerHTML: `${sum.slice(0, -1).join(' &#x2212; ')} =`});
+        equation.appendChild($el('input', {solution: sum[sum.length-1], type:'text', maxlength: maxlength}));
+      }
     } else {
-      equation = $el('label', {innerHTML: `${sum.slice(0, -1).join(' &#x2212; ')} =`});
-      equation.appendChild($el('input', {solution: sum[sum.length-1], type:'text', maxlength: maxlength}));
+      // Multiplcation or division
+      let prod = makeProduct(min, max, qs.getI('setSize', 2));
+      if (problem_type < mult_range[1]) {
+        equation = $el('label', {innerHTML: `${prod.slice(1).join(' × ')} =`});
+        equation.appendChild($el('input', {solution: prod[0], type:'text', maxlength: maxlength}));
+      } else {
+        equation = $el('label', {innerHTML: `${prod.slice(0, -1).join(' &#x00f7; ')} =`});
+        equation.appendChild($el('input', {solution: prod[prod.length-1], type:'text', maxlength: maxlength}));
+      }
     }
+
     // Icons for right and wrong
     equation.appendChild($el('i', {className: 'cil-check right'}));
     equation.appendChild($el('i', {className: 'cil-x wrong'}));
@@ -113,15 +139,25 @@ addEventListener('DOMContentLoaded', _ => {
   let numProbs = qs.getI('n', 8);
   let min = qs.getI('min', 0);
   let max = qs.getI('max', 11);
-  let sum_parts = qs.getI('sum_parts', 1);
-  let difference_parts = qs.getI('difference_parts', 1);
-  let mix = sum_parts / (sum_parts + difference_parts);
+
+  let sum_parts = qs.getI('sums', 1);
+  let difference_parts = qs.getI('subs', 1);
+  let multiplication_parts = qs.getI('mults', 1);
+  let division_parts = qs.getI('divs', 1);
+
+  let total = sum_parts + difference_parts + multiplication_parts + division_parts;
+  let sum_range = [0, sum_parts / total];
+  let difference_range = [sum_range[1], (difference_parts + sum_parts) / total];
+  let multiplication_range = [difference_range[1],
+    (multiplication_parts + difference_parts + sum_parts) / total];
+  let division_range = [multiplication_range[1], 1];
 
   let style = $el('style');
   $('head').appendChild(style);
   style.sheet.insertRule(`label>input{width:${2 * numDigits(max)}rem}`);
 
-  container.appendChild(generateProblems(numProbs, min, max, mix));
+  container.appendChild(generateProblems(numProbs, min, max,
+    [sum_range, difference_range, multiplication_range, division_range]));
 
   let regenerate = $el('button', {className: 'regenerate', innerText: 'Regenerate'});
   regenerate.addEventListener('click', e => {
