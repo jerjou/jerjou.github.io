@@ -82,16 +82,25 @@ function checkAnswers(e) {
 
 function generateProblems(numProbs, min, max, [sum_range, sub_range, mult_range, div_range]) {
   let form = $el('form', {className: 'problem'});
-  let maxlength = numDigits(max);
+  let maxlength = numDigits(max) + 1;
 
   for (let i = 0; i < numProbs; i++) {
     let problem_type = Math.random();
     let equation;
     if (problem_type < sub_range[1]) {
       // Addition or subtraction
-      let sum = makeSum(min, max, qs.getI('setSize', 2));
+      let numNums = qs.getI('setSize', 2);
+      let sum = makeSum(min, max, numNums);
       if (problem_type < sum_range[1]) {
-        equation = $el('label', {innerHTML: `${sum.slice(1).join(' + ')} =`});
+        if (numNums > 2) {
+          equation = $el('label');
+          let nums = $el('div', {className:'nums'});
+          nums.append(...sum.slice(1).map(n => $el('span', {innerText:n})));
+          nums.append($el('div', {className:'operator', innerText:'+'}));
+          equation.append(nums);
+        } else {
+          equation = $el('label', {innerHTML: `${sum.slice(1).join(' + ')} =`});
+        }
         equation.appendChild($el('input', {solution: sum[0], type:'text', maxlength: maxlength}));
       } else {
         equation = $el('label', {innerHTML: `${sum.slice(0, -1).join(' &#x2212; ')} =`});
@@ -141,9 +150,9 @@ addEventListener('DOMContentLoaded', _ => {
   let max = qs.getI('max', 11);
 
   let sum_parts = qs.getI('sums', 1);
-  let difference_parts = qs.getI('subs', 1);
-  let multiplication_parts = qs.getI('mults', 1);
-  let division_parts = qs.getI('divs', 1);
+  let difference_parts = qs.getI('subs', 0);
+  let multiplication_parts = qs.getI('mults', 0);
+  let division_parts = qs.getI('divs', 0);
 
   let total = sum_parts + difference_parts + multiplication_parts + division_parts;
   let sum_range = [0, sum_parts / total];

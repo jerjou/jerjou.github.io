@@ -32,9 +32,11 @@ form.problem label {
   outline: 1px auto;
   padding: .9rem 1rem;
   position: relative;
+  text-align:right;
 }
 form.problem input {
   font-size: inherit;
+  text-align:right;
 }
 form>input[type=submit] {
   display: none;
@@ -80,6 +82,22 @@ label input {
   vertical-align: top;
   width: 4rem;
   border: 1px solid rgba(0,0,0,.5);
+}
+div.nums {
+  text-align:right;
+  display:flex;
+  flex-flow:column nowrap;
+  position: relative;
+  font-family:monospace;
+  border-bottom:2px solid rgba(0,0,0,.5);
+  margin:0 0 .5em;
+  padding-left:1em;
+}
+div.nums>.operator {
+  position:absolute;
+  bottom:0;left:0;
+}
+div.nums+input {
 }
 label.wrong input {
   border-color: red;
