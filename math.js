@@ -172,7 +172,7 @@ addEventListener('DOMContentLoaded', _ => {
   regenerate.addEventListener('click', e => {
     e.preventDefault();
     container.replaceChild(
-      generateProblems(numProbs, min, max, mix),
+      generateProblems(numProbs, min, max, [sum_range, difference_range, multiplication_range, division_range]),
       container.childNodes[0]);
   });
   container.appendChild(regenerate);
