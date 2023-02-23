@@ -7,7 +7,7 @@ let numDigits = n => Math.log10(n) + 1 | 0;
 
 // Generates a set of random numbers that sum to the first element of the
 // returned array
-let makeSum = (min, max, n=2) => {
+let makeSum = (min, max, n=2, minNumber=1) => {
   let range = max - min;
   let divisions = [...Array(n).keys()].map(_ => min + rint(range));
   // The `divisions` array holds all the numbers you'll hit along the way to
@@ -16,6 +16,10 @@ let makeSum = (min, max, n=2) => {
   // Create an array of the numbers you're going to be summing
   let nums = [
     divisions[0], ...divisions.slideBy(2).map(([a, b]) => b - a)];
+
+  // HACK: avoid zeros ie < minNumber. If there's a zero, just regenerate
+  if (nums.findIndex(n=>n<minNumber) >= 0) return makeSum(min, max, n, minNumber);
+
   // The last number of `divisions` is the sum
   let sum = divisions.pop();
   return [sum, ...nums];
